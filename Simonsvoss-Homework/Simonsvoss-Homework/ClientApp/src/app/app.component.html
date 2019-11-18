@@ -1,1 +1,12 @@
-Hello world
+<div>
+  <input type="text" [(ngModel)]="searchInput" />
+  <button (click)="search()">Search</button>
+	<div *ngIf="searchResult" style="margin-top: 10px;"> Search results: </div>
+	<div *ngFor="let item of searchResult; let i=index" style="margin-top: 10px;">
+		{{i + 1}}.  
+		<!-- Since we don't know what type of object it is, iterate over objects all properties and display them. -->
+		<div *ngFor="let key of getProperties(item)" style="display: inline; margin-right: 5px;">
+			{{key}}=<span style="color: red">"{{item[key]}}"</span>
+		</div>
+	</div>
+</div>
