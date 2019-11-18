@@ -23,5 +23,27 @@ namespace Simonsvoss_Homework.Models
     {
       Locks = new List<string>();
     }
+
+    public void CalculateWeight(string text, Dictionary<string, Entity> dict)
+    {
+      int shortCutWeight = SearchService.GetWeight(ShortCut, ShortCutWeight, text);
+      int nameWeight = SearchService.GetWeight(Name, NameWeight, text);
+      int descriptionWeight = SearchService.GetWeight(Description, DescriptionWeight, text);
+
+      Weight = shortCutWeight + nameWeight + descriptionWeight;
+
+      // Assign transitive weights to Locks related to this Building
+      if (Weight > 0)
+      {
+        int tWeight = shortCutWeight / ShortCutWeight * ShortCutTWeight + nameWeight / NameWeight * NameTWeight + descriptionWeight / DescriptionWeight * DescriptionTWeight;
+        foreach (var lockId in Locks)
+        {
+          if (dict.ContainsKey(lockId))
+          {
+            dict[lockId].Weight = tWeight;
+          }
+        }
+      }
+    }
   }
 }

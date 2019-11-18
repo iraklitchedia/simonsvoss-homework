@@ -14,5 +14,13 @@ namespace Simonsvoss_Homework.Models
     public string Owner { get; set; }
     public string SerialNumber { get; set; }
     public string Description { get; set; }
+
+    public void CalculateWeight(string text)
+    {
+      Weight += SearchService.GetWeight(Type, TypeWeight, text);
+      Weight += SearchService.GetWeight(Owner, OwnerWeight, text);
+      Weight += SearchService.GetWeight(SerialNumber, SerialNumberWeight, text);
+      Weight += SearchService.GetWeight(Description, DescriptionWeight, text);
+    }
   }
 }

@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Newtonsoft.Json;
 using Simonsvoss_Homework.Models;
 
@@ -30,7 +32,51 @@ namespace Simonsvoss_Homework
     /// <returns></returns>
     public string Search(string text)
     {
-      return JsonConvert.SerializeObject(_data);
+      var result = new List<Entity>();
+
+      foreach (var buildingItem in _data.buildings)
+      {
+        buildingItem.CalculateWeight(text, _dict);
+
+        if (buildingItem.Weight > 0)
+        {
+          result.Add(buildingItem);
+        }
+      }
+
+      foreach (var lockItem in _data.locks)
+      {
+        lockItem.CalculateWeight(text);
+
+        if (lockItem.Weight > 0)
+        {
+          result.Add(lockItem);
+        }
+      }
+
+      foreach (var groupItem in _data.groups)
+      {
+        groupItem.CalculateWeight(text, _dict);
+
+        if (groupItem.Weight > 0)
+        {
+          result.Add(groupItem);
+        }
+      }
+
+      foreach (var mediumItem in _data.media)
+      {
+        mediumItem.CalculateWeight(text);
+
+        if (mediumItem.Weight > 0)
+        {
+          result.Add(mediumItem);
+        }
+      }
+
+      result = result.OrderBy(r => r.Weight).ToList();
+
+      return JsonConvert.SerializeObject(result);
     }
 
     /// <summary>
@@ -80,6 +126,32 @@ namespace Simonsvoss_Homework
           ((Group) _dict[mediumItem.GroupId]).Media.Add(mediumItem.Id);
         }
       }
+    }
+
+    /// <summary>
+    /// Calculates Weight of the property based on Searched text
+    /// Weight of the "Full match" is 10x more than weighht of the "Partial match"
+    /// </summary>
+    /// <param name="property"></param>
+    /// <param name="propertyWeight"></param>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public static int GetWeight(string property, int propertyWeight, string text)
+    {
+      // If propert is null or empty return 0
+      if (string.IsNullOrEmpty(property))
+      {
+        return 0;
+      }
+
+      if (property.IndexOf(text, StringComparison.OrdinalIgnoreCase) >= 0)
+      {
+        // Check if it is a full match or not
+        int multiplier = property.Length == text.Length ? 10 : 1;
+        return multiplier * propertyWeight;
+      }
+
+      return 0;
     }
   }
 }

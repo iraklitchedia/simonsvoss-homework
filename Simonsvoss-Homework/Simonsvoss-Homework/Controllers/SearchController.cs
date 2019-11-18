@@ -13,10 +13,10 @@ namespace Simonsvoss_Homework.Controllers
     }
 
     [HttpGet("[action]")]
-    public string SearchText(string text)
+    public IActionResult SearchText(string text)
     {
       var result = _searchService.Search(text);
-      return result;
+      return Ok(result);
     }
   }
 }

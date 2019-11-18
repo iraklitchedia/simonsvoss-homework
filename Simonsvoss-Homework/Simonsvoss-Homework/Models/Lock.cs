@@ -18,5 +18,15 @@ namespace Simonsvoss_Homework.Models
     public string Floor { get; set; }
     public string RoomNumber { get; set; }
     public string Description { get; set; }
+
+    public void CalculateWeight(string text)
+    {
+      Weight += SearchService.GetWeight(Type, TypeWeight, text);
+      Weight += SearchService.GetWeight(Name, NameWeight, text);
+      Weight += SearchService.GetWeight(SerialNumber, SerialNumberWeight, text);
+      Weight += SearchService.GetWeight(Floor, FloorWeight, text);
+      Weight += SearchService.GetWeight(RoomNumber, RoomNumberWeight, text);
+      Weight += SearchService.GetWeight(Description, DescriptionWeight, text);
+    }
   }
 }

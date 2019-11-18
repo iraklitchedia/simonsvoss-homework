@@ -20,5 +20,26 @@ namespace Simonsvoss_Homework.Models
     {
       Media = new List<string>();
     }
+
+    public void CalculateWeight(string text, Dictionary<string, Entity> dict)
+    {
+      int nameWeight = SearchService.GetWeight(Name, NameWeight, text);
+      int descriptionWeight = SearchService.GetWeight(Description, DescriptionWeight, text);
+
+      Weight = nameWeight + descriptionWeight;
+
+      // Assign transitive weights to Mediums related to this Group
+      if (Weight > 0)
+      {
+        int tWeight = nameWeight / NameWeight * NameTWeight + descriptionWeight / DescriptionWeight * DescriptionTWeight;
+        foreach (var mediumId in Media)
+        {
+          if (dict.ContainsKey(mediumId))
+          {
+            dict[mediumId].Weight = tWeight;
+          }
+        }
+      }
+    }
   }
 }
