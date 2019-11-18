@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AppComponent {
   searchInput: string = "";
-	searchResult: any;
+	searchResult: any = [];
 	constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
     
   }
@@ -16,11 +16,6 @@ export class AppComponent {
 
 	search()
 	{
-		this.searchResult = [
-				{ id: "1", description: "Desc1"},
-				{ id: "2", description: "Desc2"}
-      ];	
-      
     this.http.get<any>(this.baseUrl + 'api/Search/SearchText?text=' + this.searchInput).subscribe(result => {
       this.searchResult = result;
     }, error => console.error(error));
