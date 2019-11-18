@@ -24,6 +24,16 @@ namespace Simonsvoss_Homework.Models
       Locks = new List<string>();
     }
 
+    public Building(Building building)
+    {
+      Id = building.Id;
+      Weight = building.Weight;
+      ShortCut = building.ShortCut;
+      Name = building.Name;
+      Description = building.Description;
+      Locks = building.Locks;
+    }
+
     public void CalculateWeight(string text, Dictionary<string, Entity> dict)
     {
       int shortCutWeight = SearchService.GetWeight(ShortCut, ShortCutWeight, text);

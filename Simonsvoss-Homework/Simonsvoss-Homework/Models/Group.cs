@@ -21,6 +21,14 @@ namespace Simonsvoss_Homework.Models
       Media = new List<string>();
     }
 
+    public Group(Group group)
+    {
+      Id = group.Id;
+      Weight = group.Weight;
+      Name = group.Name;
+      Description = group.Description;
+    }
+
     public void CalculateWeight(string text, Dictionary<string, Entity> dict)
     {
       int nameWeight = SearchService.GetWeight(Name, NameWeight, text);

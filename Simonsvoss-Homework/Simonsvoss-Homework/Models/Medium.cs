@@ -15,6 +15,18 @@ namespace Simonsvoss_Homework.Models
     public string SerialNumber { get; set; }
     public string Description { get; set; }
 
+    public Medium() { }
+    
+    public Medium(Medium obj)
+    {
+      Id = obj.Id;
+      Weight = obj.Weight;
+      Type = obj.Type;
+      Owner = obj.Owner;
+      SerialNumber = obj.SerialNumber;
+      Description = obj.Description;
+    }
+
     public void CalculateWeight(string text)
     {
       Weight += SearchService.GetWeight(Type, TypeWeight, text);

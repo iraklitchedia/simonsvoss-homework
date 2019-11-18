@@ -40,7 +40,9 @@ namespace Simonsvoss_Homework
 
         if (buildingItem.Weight > 0)
         {
-          result.Add(buildingItem);
+          var newBuildingItem = new Building(buildingItem);
+          result.Add(newBuildingItem);
+          buildingItem.Weight = 0;
         }
       }
 
@@ -50,7 +52,9 @@ namespace Simonsvoss_Homework
 
         if (lockItem.Weight > 0)
         {
-          result.Add(lockItem);
+          var newLockItem = new Lock(lockItem);
+          result.Add(newLockItem);
+          lockItem.Weight = 0;
         }
       }
 
@@ -60,7 +64,9 @@ namespace Simonsvoss_Homework
 
         if (groupItem.Weight > 0)
         {
-          result.Add(groupItem);
+          var newGroupItem = new Group(groupItem);
+          result.Add(newGroupItem);
+          groupItem.Weight = 0;
         }
       }
 
@@ -70,11 +76,14 @@ namespace Simonsvoss_Homework
 
         if (mediumItem.Weight > 0)
         {
-          result.Add(mediumItem);
+          var newMediumItem = new Medium(mediumItem);
+          result.Add(newMediumItem);
+          mediumItem.Weight = 0;
         }
       }
 
-      result = result.OrderBy(r => r.Weight).ToList();
+      // Sort by weight descending
+      result = result.OrderByDescending(r => r.Weight).ToList();
 
       return JsonConvert.SerializeObject(result);
     }

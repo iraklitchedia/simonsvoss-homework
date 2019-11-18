@@ -19,6 +19,21 @@ namespace Simonsvoss_Homework.Models
     public string RoomNumber { get; set; }
     public string Description { get; set; }
 
+    public Lock() { }
+
+    public Lock(Lock obj)
+    {
+      Id = obj.Id;
+      Weight = obj.Weight;
+      BuildingId = obj.BuildingId;
+      Type = obj.Type;
+      Name = obj.Name;
+      SerialNumber = obj.SerialNumber;
+      Floor = obj.Floor;
+      RoomNumber = obj.RoomNumber;
+      Description = obj.Description;
+    }
+
     public void CalculateWeight(string text)
     {
       Weight += SearchService.GetWeight(Type, TypeWeight, text);
