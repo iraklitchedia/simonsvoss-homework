@@ -7,15 +7,16 @@ namespace Simonsvoss_Homework.Controllers
   {
     private ISearchService _searchService;
 
-    SearchController(ISearchService searchService)
+    public SearchController(ISearchService searchService)
     {
       _searchService = searchService;
     }
 
     [HttpGet("[action]")]
-    public string SearchText()
+    public string SearchText(string text)
     {
-      return "Hello world";
+      var result = _searchService.Search(text);
+      return result;
     }
   }
 }
