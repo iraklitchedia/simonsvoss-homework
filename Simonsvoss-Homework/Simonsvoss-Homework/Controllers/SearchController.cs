@@ -15,6 +15,11 @@ namespace Simonsvoss_Homework.Controllers
     [HttpGet("[action]")]
     public IActionResult SearchText(string text)
     {
+      if (string.IsNullOrEmpty(text))
+      {
+        return null;
+      }
+
       var result = _searchService.Search(text);
       return Ok(result);
     }

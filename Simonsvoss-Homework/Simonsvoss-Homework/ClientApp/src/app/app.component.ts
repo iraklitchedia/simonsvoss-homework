@@ -18,7 +18,7 @@ export class AppComponent {
 	{
     this.http.get<any>(this.baseUrl + 'api/Search/SearchText?text=' + this.searchInput).subscribe(result => {
       this.searchResult = result;
-    }, error => console.error(error));
+    }, error => window.alert("Something went wrong, please try again."));
   }
   
   // Returns object properties list
